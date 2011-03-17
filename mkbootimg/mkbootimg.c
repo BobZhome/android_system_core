@@ -106,7 +106,7 @@ int main(int argc, char **argv)
     char *cmdline = "";
     char *bootimg = 0;
     char *board = "";
-    unsigned pagesize = 2048;
+    unsigned pagesize = 4096;
     int fd;
     SHA_CTX ctx;
     const uint8_t* sha;
