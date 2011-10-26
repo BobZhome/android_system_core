@@ -7,7 +7,11 @@ copy_from := \
 	etc/dbus.conf \
 	etc/hosts
 
-ifeq ($(TARGET_PRODUCT),generic)
+ifeq "$(findstring generic,$(TARGET_PRODUCT))" "generic"
+copy_from += etc/vold.fstab
+endif
+
+ifeq ($(TARGET_PRODUCT),full_x86)
 copy_from += etc/vold.fstab
 endif
 
