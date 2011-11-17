@@ -43,29 +43,20 @@ TOOLS := \
 	uptime \
 	vmstat \
 	nandread \
-	ionice 
+	ionice \
+	touch \
+	lsof
 
-ifndef TINY_TOOLBOX
-    TOOLS += \
-        mkdir \
-        ln \
-        ls \
-        mount \
-        rm \
-        umount \
-        df \
-        chmod \
-        chown \
-        mv \
-        lsof	
+ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
+TOOLS += r
 endif
 
 LOCAL_SRC_FILES:= \
+	dynarray.c \
 	toolbox.c \
 	$(patsubst %,%.c,$(TOOLS))
 
-LOCAL_STATIC_LIBRARIES := libreboot
-LOCAL_SHARED_LIBRARIES := libcutils libc
+LOCAL_SHARED_LIBRARIES := libcutils libc libusbhost
 
 LOCAL_MODULE:= toolbox
 
