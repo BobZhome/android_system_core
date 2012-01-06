@@ -747,6 +747,7 @@ int main(int argc, char **argv)
 
     /* execute all the boot actions to get us started */
     action_for_each_trigger("early-boot", action_add_queue_tail);
+    action_for_each_trigger("boot-pause", action_add_queue_tail);
     action_for_each_trigger("boot", action_add_queue_tail);
 
         /* run all property triggers based on current state of the properties */
