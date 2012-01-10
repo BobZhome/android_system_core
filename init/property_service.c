@@ -72,6 +72,7 @@ struct {
     { "hw.",              AID_SYSTEM,   0 },
     { "sys.",             AID_SYSTEM,   0 },
     { "service.",         AID_SYSTEM,   0 },
+    { "service.",         AID_RADIO,    0 },
     { "wlan.",            AID_SYSTEM,   0 },
     { "dhcp.",            AID_SYSTEM,   0 },
     { "dhcp.",            AID_DHCP,     0 },
@@ -82,6 +83,7 @@ struct {
     { "service.adb.root", AID_SHELL,    0 },
     { "persist.sys.",     AID_SYSTEM,   0 },
     { "persist.service.", AID_SYSTEM,   0 },
+    { "persist.service.", AID_RADIO,    0 },
     { "persist.security.",AID_SYSTEM,   0 },
     { "wimax.",           AID_SYSTEM,   1000 },
     { "net.pdp0",         AID_RADIO,    0 },
@@ -110,6 +112,8 @@ struct {
     { "rawip_vsnet2",AID_RADIO, AID_RADIO },
     { "rawip_vsnet3",AID_RADIO, AID_RADIO },
     { "rawip_vsnet4",AID_RADIO, AID_RADIO },
+    { "rawip_rmnet1",AID_RADIO, AID_RADIO },
+    { "rmnet1_down", AID_RADIO, AID_RADIO },
      {NULL, 0, 0 }
 };
 

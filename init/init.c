@@ -89,6 +89,7 @@ static time_t process_needs_restart;
 static const char *ENV[32];
 
 static unsigned emmc_boot = 0;
+static unsigned battchg_pause = 0;
 
 /* add_environment - add "key=value" to the current environment */
 int add_environment(const char *key, const char *val)
@@ -391,6 +392,11 @@ void handle_control_message(const char *msg, const char *arg)
     }
 }
 
+#ifndef CHARGERMODE_CMDLINE_NAME
+#define CHARGERMODE_CMDLINE_NAME "androidboot.battchg_pause"
+#define CHARGERMODE_CMDLINE_VALUE "true"
+#endif
+
 static void import_kernel_nv(char *name, int in_qemu)
 {
     char *value = strchr(name, '=');
@@ -424,6 +430,10 @@ static void import_kernel_nv(char *name, int in_qemu)
         } else if (!strcmp(name, "androidboot.emmc")) {
             if (!strcmp(value, "true")) {
                 emmc_boot =1;
+            }
+        } else if (!strcmp(name,CHARGERMODE_CMDLINE_NAME)) {
+            if (!strcmp(value, CHARGERMODE_CMDLINE_VALUE)) {
+                battchg_pause = 1;
             }
         }
     } else {
@@ -744,6 +754,11 @@ int main(int argc, char **argv)
     queue_builtin_action(property_service_init_action, "property_service_init");
     queue_builtin_action(signal_init_action, "signal_init");
     queue_builtin_action(check_startup_action, "check_startup");
+
+    /* pause if necessary */
+    if (battchg_pause) {
+        action_for_each_trigger("boot-pause", action_add_queue_tail);
+    }
 
     /* execute all the boot actions to get us started */
     action_for_each_trigger("early-boot", action_add_queue_tail);
