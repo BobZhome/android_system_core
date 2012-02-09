@@ -737,6 +737,14 @@ int main(int argc, char **argv)
             init_parse_config_file("/init.target.rc");
     }
 
+    /* If /proc/last_kmsg exists the phone has been rebooted, if not
+       it's a cold boot */
+    if (access("/proc/last_kmsg", R_OK) == 0) {
+        battchg_pause = 0;
+    } else {
+        battchg_pause = 1;
+    }
+
     action_for_each_trigger("early-init", action_add_queue_tail);
 
     queue_builtin_action(wait_for_coldboot_done_action, "wait_for_coldboot_done");
